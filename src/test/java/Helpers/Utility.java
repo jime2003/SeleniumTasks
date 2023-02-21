@@ -2,6 +2,8 @@ package Helpers;
 
 import java.time.Duration;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -34,11 +36,48 @@ public class Utility {
             else{
                 Reporter.log(browserName + "not supported");
             }
+            
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
             driver.manage().window().maximize();
             driver.get(appUrl);
 
             return driver;
+        }
+
+        public static WebElement elementHighlighter(WebDriver driver, WebElement element){
+            
+            JavascriptExecutor js = (JavascriptExecutor)driver;
+            js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid red;')", element);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {  
+                e.printStackTrace();
+            }
+            js.executeScript("arguments[0].setAttribute('style','background:#FFFFFF;border-top-color: ;border-right-color: ;border-bottom-color: ;border-left-color: ;')", element);
+            return element;
+        }
+
+        public static WebElement elementHighlighter(WebDriver driver,By locator){
+            WebElement element = driver.findElement(locator);
+            
+            JavascriptExecutor js = (JavascriptExecutor)driver;
+            js.executeScript("arguments[0].setAttribute('style','background:yellow;border:2px solid red;')", element);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {  
+                e.printStackTrace();
+            }
+            js.executeScript("arguments[0].setAttribute('style','background:#FFFFFF;border-top-color: ;border-right-color: ;border-bottom-color: ;border-left-color: ;')", element);
+            return element;
+        }
+
+        public static void waitForSeconds(int seconds){
+            try {
+                Thread.sleep(seconds);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
 }    
     
